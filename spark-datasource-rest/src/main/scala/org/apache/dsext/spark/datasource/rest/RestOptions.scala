@@ -116,5 +116,4 @@ object RESTOptions {
   val REST_OAUTH1_TOKEN_SECRET = newOption("oauthTokenSecret")
   val REST_CALL_STRICTLY_ONCE = newOption("callStrictlyOnce")
   val REST_SCHEMA_SAMPLE_PCNT = newOption("schemaSamplePcnt")
-  val REST_AUTHTOKEN = newOption("authToken")
 }

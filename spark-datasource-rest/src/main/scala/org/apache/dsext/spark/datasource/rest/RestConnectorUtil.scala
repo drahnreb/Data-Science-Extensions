@@ -51,11 +51,11 @@ object RestConnectorUtil {
 
 
     var httpc = (method: @switch) match {
-      case "GET" => Http(addQryParmToUri(uri, data)).header("contenty-type",
+      case "GET" => Http(addQryParmToUri(uri, data)).header("Content-Type",
                      "application/x-www-form-urlencoded").header("X-Auth-Token", authToken)
       case "PUT" => Http(uri).put(data).header("Content-Type", contentType)
       case "DELETE" => Http(uri).method("DELETE")
-      case "POST" => Http(uri).postData(data).header("Content-Type", contentType).header("Authorization", authToken)
+      case "POST" => Http(uri).postData(data).header("Content-Type", contentType).header("X-Auth-Token", authToken)
     }
 
     val conns = connStr.split(":")
@@ -128,7 +128,14 @@ object RestConnectorUtil {
     val outArrB : ArrayBuffer[String] = new ArrayBuffer[String](keysLength)
 
     while (cnt < keysLength) {
-        outArrB += "\"" + keys(cnt) + "\":\"" + values(cnt) + "\""
+        if(values(cnt).startsWith("[") || values(cnt).startsWith("{")) {
+          // string casted arrays or objects
+          outArrB += "\"" + keys(cnt) + "\":" + values(cnt)
+        }
+        else {
+          // simple input
+          outArrB += "\"" + keys(cnt) + "\":\"" + values(cnt) + "\""
+        }
         cnt += 1
     }
 
@@ -158,7 +165,14 @@ object RestConnectorUtil {
     val outArrB : ArrayBuffer[String] = new ArrayBuffer[String](keysLength)
 
     while (cnt < keysLength) {
-        outArrB += "\"" + keys(cnt) + "\":\"" + values(cnt) + "\""
+        if(values(cnt).startsWith("[") || values(cnt).startsWith("{")) {
+          // string casted arrays or objects
+          outArrB += "\"" + keys(cnt) + "\":" + values(cnt)
+        }
+        else {
+          // simple input
+          outArrB += "\"" + keys(cnt) + "\":\"" + values(cnt) + "\""
+        }
         cnt += 1
     }
 

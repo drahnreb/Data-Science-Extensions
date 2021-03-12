@@ -127,7 +127,7 @@ case class RESTRelation(
 
     val resp = RestConnectorUtil.callRestAPI(restOptions.url, inputDataStr,
            restOptions.method, oauthStr, userCred, connectionStr,
-           contentType, "BODY", restOptions.authToken).asInstanceOf[String]
+           contentType, "BODY", restOptions.oauthToken).asInstanceOf[String]
     prepareOutputData(valuesArr, resp)
 
   }
